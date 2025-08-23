@@ -74,14 +74,14 @@ namespace MyForstWebApplication.Models
         /// <returns>Результат выполнения операции</returns>
         public bool Delete(DateTime date)
         {
-            foreach (WeatherForecast item in _values)
+            WeatherForecast existingForecast = _values.FirstOrDefault(item => item.Date == date);
+
+            if (existingForecast != null)
             {
-                if (item.Date == date)
-                {
-                    _values.Remove(item);
-                    return true;
-                }
+                _values.Remove(existingForecast);
+                return true;
             }
+
             return false;
         }
     }

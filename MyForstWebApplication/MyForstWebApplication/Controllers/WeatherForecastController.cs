@@ -18,24 +18,39 @@ namespace MyForstWebApplication.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromQuery]  DateTime date, [FromQuery] int temperatureC)
+        public IActionResult Add([FromQuery] DateTime date, [FromQuery] int temperatureC)
         {
-            _weatherForecastHolder.Add(date, temperatureC); 
+            _weatherForecastHolder.Add(date, temperatureC);
             return Ok();
         }
 
-        [HttpPut("update")]
         public IActionResult Update([FromQuery] DateTime date, [FromQuery] int temperatureC)
         {
-            _weatherForecastHolder.Update(date, temperatureC);
-            return Ok();
+            bool updated = _weatherForecastHolder.Update(date, temperatureC);
+
+            if (updated)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound(); // Возвращаем 404, если запись не найдена
+            }
         }
 
         [HttpDelete("delete")]
         public IActionResult Delete([FromQuery] DateTime date)
         {
-            _weatherForecastHolder.Delete(date);
-            return Ok();
+            bool deleted = _weatherForecastHolder.Delete(date);
+
+            if (deleted)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound(); // Возвращаем 404, если запись не найдена
+            }
         }
 
         [HttpGet("get")]
