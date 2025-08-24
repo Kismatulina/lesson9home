@@ -20,6 +20,10 @@ namespace MyForstWebApplication
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            // Добавьте этот endpoint
+            app.MapGet("/", () => "Привет! Это главная страница моего API. Перейдите на /weatherforecast для получения данных.");
+
+            // ... остальной код (app.UseHttpsRedirection(); и т.д.)
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
